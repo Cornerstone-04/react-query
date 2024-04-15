@@ -1,0 +1,14 @@
+{
+  "superheroes": [
+    { "id": 1, "name": "Batman", "alterEgo": "Bruce Wayne" },
+    { "id": 2, "name": "Superman", "alterEgo": "Clark Kent" },
+    { "id": 3, "name": "Iron Man", "alterEgo": "Tony Stark" },
+    { "id": 4, "name": "Wonder Woman", "alterEgo": "Diana Prince" },
+    { "id": 5, "name": "Spider-Man", "alterEgo": "Peter Parker" },
+    { "id": 6, "name": "The Flash", "alterEgo": "Barry Allen" },
+    { "id": 7, "name": "Green Lantern", "alterEgo": "Hal Jordan" },
+    { "id": 8, "name": "Black Widow", "alterEgo": "Natasha Romanoff" },
+    { "id": 9, "name": "Hulk", "alterEgo": "Bruce Banner" },
+    { "id": 10, "name": "Thor", "alterEgo": "Thor Odinson" }
+  ]
+}
