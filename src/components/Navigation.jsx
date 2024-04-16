@@ -11,7 +11,7 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="w-full h-fit md:h-[80px] sticky top-0 flex justify-between items-center p-4 shadow bg-yellow-100 text-slate-800">
+    <nav className="w-full h-fit md:h-[80px] sticky top-0 flex justify-between items-center p-4 shadow bg-slate-800 text-[#FFFFF0]">
       <h1 className="font-bold text-base sm:text-lg lg:text-xl">
         REACT QUERY DEMO
       </h1>

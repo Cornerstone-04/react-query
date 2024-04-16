@@ -15,9 +15,11 @@ const RQSuperHeroes = () => {
     return response.data;
   };
 
+  //destructure request element
   const { data, error, isError, isLoading } = useQuery(
-    "super-heroes",
-    fetchSuperHeroes
+    "super-heroes", //query-key
+    fetchSuperHeroes //api function
+    // { cacheTime: 5000 } to configure cache time
   );
 
   useEffect(() => {
@@ -26,6 +28,7 @@ const RQSuperHeroes = () => {
     }
   }, [data, setSuperHeroes]);
 
+  // loading state
   if (isLoading) {
     return (
       <Layout>
@@ -38,6 +41,7 @@ const RQSuperHeroes = () => {
     );
   }
 
+  // error state
   if (isError) {
     return (
       <Layout>

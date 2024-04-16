@@ -7,6 +7,7 @@ import { HeroCard } from "../components";
 
 const SuperHeroes = () => {
   const { superHeroes, setSuperHeroes } = useSuperHeroes();
+  const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -16,6 +17,8 @@ const SuperHeroes = () => {
       if (response.status !== 200) {
         throw new Error("Failed to fetch data");
       }
+      setData(response.data);
+      setSuperHeroes(data);
     } catch (error) {
       console.log(error.message);
       setError(error.message);
@@ -59,8 +62,8 @@ const SuperHeroes = () => {
           <h2 className="text-2xl font bold text-slate-800">Super Heroes</h2>
         </header>
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center md:justify-items-start gap-4">
-          {superHeroes && superHeroes.length > 0 ? (
-            superHeroes.map(({ alterEgo, id, name }) => (
+          {data && data.length > 0 ? (
+            data.map(({ alterEgo, id, name }) => (
               <HeroCard id={id} name={name} alterEgo={alterEgo} />
             ))
           ) : (
