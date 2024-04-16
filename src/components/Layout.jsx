@@ -5,7 +5,7 @@ const Layout = ({ children }) => {
   return (
     <div className="w-full flex flex-col">
       <Navigation />
-      {children}
+      <div className="w-full pt-4">{children}</div>
     </div>
   );
 };

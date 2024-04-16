@@ -6,7 +6,7 @@ import useSuperHeroes from "../utils/store/superHeroes";
 import { HeroCard } from "../components";
 
 const RQSuperHeroes = () => {
-  const { superHeroes, setSuperHeroes } = useSuperHeroes();
+  const { setSuperHeroes } = useSuperHeroes();
   const fetchSuperHeroes = async () => {
     const response = await axiosApi.get("/superheroes");
     if (response.status !== 200) {
@@ -15,7 +15,10 @@ const RQSuperHeroes = () => {
     return response.data;
   };
 
-  const { data, error, isLoading } = useQuery("super-heroes", fetchSuperHeroes);
+  const { data, error, isError, isLoading } = useQuery(
+    "super-heroes",
+    fetchSuperHeroes
+  );
 
   useEffect(() => {
     if (data) {
@@ -28,19 +31,21 @@ const RQSuperHeroes = () => {
       <Layout>
         <main className="w-full flex flex-col gap-4 p-4">
           <header className="w-full font-bold">
-            <h2 className="text-2xl font bold">Loading ...</h2>
+            <h2 className="text-2xl font bold text-slate-800">Loading ...</h2>
           </header>
         </main>
       </Layout>
     );
   }
 
-  if (error) {
+  if (isError) {
     return (
       <Layout>
         <main className="w-full flex flex-col gap-4 p-4">
           <header className="w-full font-bold">
-            <h2 className="text-2xl font bold">{error.message}</h2>
+            <h2 className="text-2xl font bold text-slate-800">
+              {error.message}
+            </h2>
           </header>
         </main>
       </Layout>
@@ -51,9 +56,9 @@ const RQSuperHeroes = () => {
     <Layout>
       <main className="w-full flex flex-col gap-4 p-4">
         <header className="w-full font-bold">
-          <h2 className="text-2xl font bold">RQ Super Heroes</h2>
+          <h2 className="text-2xl font bold text-slate-800">RQ Super Heroes</h2>
         </header>
-        <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center gap-4">
+        <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center md:justify-items-start gap-4">
           {data?.map(({ alterEgo, id, name }) => (
             <HeroCard id={id} name={name} alterEgo={alterEgo} />
           ))}

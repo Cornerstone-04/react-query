@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Menu from "./Menu";
+import { CloseIcon, MenuBar } from "../assets/Icons";
 
 const Navigation = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
@@ -10,7 +11,7 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="w-full sticky top-0 flex justify-between items-center p-4 shadow bg-yellow-100">
+    <nav className="w-full h-fit md:h-[80px] sticky top-0 flex justify-between items-center p-4 shadow bg-yellow-100 text-slate-800">
       <h1 className="font-bold text-base sm:text-lg lg:text-xl">
         REACT QUERY DEMO
       </h1>
@@ -21,12 +22,14 @@ const Navigation = () => {
         >
           Home
         </Link>
+        <span>|</span>
         <Link
           to="/super-heroes"
           className="hover:text-slate-500 transition-all ease-linear"
         >
           Traditional Super Heroes
         </Link>
+        <span>|</span>
         <Link
           to="/rq-super-heroes"
           className="hover:text-slate-500 transition-all ease-linear"
@@ -36,11 +39,7 @@ const Navigation = () => {
       </div>
       <div className="flex md:hidden">
         <button onClick={handleToggleMenu}>
-          {toggleMenu ? (
-            <i className="fa-solid fa-xmark"></i>
-          ) : (
-            <i className="fa-solid fa-bars"></i>
-          )}
+          {toggleMenu ? <CloseIcon /> : <MenuBar />}
         </button>
       </div>
 
