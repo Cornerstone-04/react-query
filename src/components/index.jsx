@@ -1,11 +1,6 @@
-import React from 'react'
+import HeroCard from "./HeroCard";
+import Layout from "./Layout";
+import Menu from "./Menu";
+import Navigation from "./Navigation";
 
-const index = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
-
-export default index
+export { HeroCard, Layout, Menu, Navigation };

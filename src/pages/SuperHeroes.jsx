@@ -3,30 +3,22 @@ import Layout from "../components/Layout";
 import axiosApi from "../../api/axios";
 import useSuperHeroes from "../utils/store/superHeroes";
 import toast from "react-hot-toast";
+import { HeroCard } from "../components";
 
 const SuperHeroes = () => {
   const { superHeroes, setSuperHeroes } = useSuperHeroes();
-  // const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState();
 
   const fetchSuperHeroes = async () => {
-    // setIsLoading(true);
-    const toastId = "loadingToast";
-    toast.loading("fetching data...", { id: toastId });
-
     try {
       const response = await axiosApi.get("/superheroes");
-      console.log(response);
-      if (response.status === 200) {
-        setSuperHeroes(response.data);
-      } else {
-        toast.error("Something went wrong", { id: toastId });
+      setIsLoading(false);
+      if (response.status !== 200) {
+        throw new Error("Failed to fetch data");
       }
     } catch (error) {
-      console.error(error);
-      toast.error("Failed to fetch superheroes", { id: toastId });
-    } finally {
-      // setIsLoading(false);
-      toast.dismiss(toastId);
+      // toast.error("Failed to fetch superheroes", { id: toastId });
     }
   };
 
@@ -34,18 +26,28 @@ const SuperHeroes = () => {
     fetchSuperHeroes();
   }, []);
 
+  if (isLoading) {
+    return (
+      <Layout>
+        <main className="w-full flex flex-col gap-4 p-4">
+          <header className="w-full font-bold">
+            <h2 className="text-2xl font bold">Loading ...</h2>
+          </header>
+        </main>
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
-      <main className="w-full flex flex-col gap-4 p-4">
+      <main className="w-full flex flex-col gap-4 p-4 justify-center">
         <header className="w-full font-bold">
           <h2 className="text-2xl font bold">Super Heroes</h2>
         </header>
-        <div>
+        <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center gap-4">
           {superHeroes && superHeroes.length > 0 ? (
             superHeroes.map(({ alterEgo, id, name }) => (
-              <div key={id}>
-                <p>{name}</p>
-              </div>
+              <HeroCard id={id} name={name} alterEgo={alterEgo} />
             ))
           ) : (
             <div>
