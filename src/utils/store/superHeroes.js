@@ -1,17 +1,26 @@
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
 
+const setSuperHeroes = (set) => (newSuperHeroes) => {
+    set({ superHeroes: newSuperHeroes });
+};
+
+const clearStore = (set) => () => {
+    set({ superHeroes: [] });
+    localStorage.removeItem("superHeroes-storage");
+};
+
 const useSuperHeroes = create(
     persist(
         (set) => ({
             superHeroes: [],
-            setSuperHeroes: (newSuperHeroes) => set({ superHeroes: newSuperHeroes }),
-            clearStore: () => {
-                set({ superHeroes: [] }, false)
-                localStorage.removeItem("userCart")
-            }
+            setSuperHeroes: setSuperHeroes(set),
+            clearStore: clearStore(set)
         }),
-        { name: "superHeroes" }
+        {
+            name: "superHeroes",
+            getStorage: () => localStorage
+        }
     )
 )
 

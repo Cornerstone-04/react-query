@@ -1,26 +1,44 @@
 import React, { useEffect } from "react";
 import Layout from "../components/Layout";
-import { useQuery } from "react-query";
-import axiosApi from "../../api/axios";
+import { useQuery } from "@tanstack/react-query";
+import axiosApi from "../api/axios";
 import useSuperHeroes from "../utils/store/superHeroes";
 import { HeroCard } from "../components";
 
 const RQSuperHeroes = () => {
   const { setSuperHeroes } = useSuperHeroes();
   const fetchSuperHeroes = async () => {
-    const response = await axiosApi.get("/superheroes");
-    if (response.status !== 200) {
-      throw new Error("Failed to fetch data");
+    try {
+      const response = await axiosApi.get("/superheroes");
+      if (response.status !== 200) {
+        throw new Error("Failed to fetch data");
+      }
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response?.data?.message || "Failed to fetch data");
     }
-    return response.data;
   };
 
   //destructure request element
-  const { data, error, isError, isLoading } = useQuery(
-    "super-heroes", //query-key
-    fetchSuperHeroes //api function
-    // { cacheTime: 5000 } to configure cache time
-  );
+  const { data, error, isError, isLoading, refetch } = useQuery({
+    queryKey: ["super-heroes"],
+    queryFn: fetchSuperHeroes,
+    options: {
+      // cacheTime: 5000,
+      // staleTime: 0,
+      // refetchOnMount: true, // or false or "always"
+      refetchOnWindowFocus: true, // data is fetched again when your window loses and regains focus
+      refetchInterval: false, // for polling
+      enabled: false, // to deactivate automatic fetching on page load (change event of query)
+      /**
+       * Caching allows users to view previously loaded data without loading delay.
+       * Caching reduces the number of data requests for data that doesn't change often.
+       *
+       * Polling is the process of fetching data at regular intervals.
+       * Automatic fetching is paused if the window loses focus.
+       */
+    },
+  });
 
   useEffect(() => {
     if (data) {
@@ -59,13 +77,23 @@ const RQSuperHeroes = () => {
   return (
     <Layout>
       <main className="w-full flex flex-col gap-4 p-4">
-        <header className="w-full font-bold">
+        <header className="w-full font-bold flex justify-between items-center">
           <h2 className="text-2xl font bold text-slate-800">RQ Super Heroes</h2>
+          <button
+            onClick={refetch}
+            className="w-fit p-3 bg-green-500 text-white font-semibold"
+          >
+            Fetch Heroes
+          </button>
         </header>
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center md:justify-items-start gap-4">
-          {data?.map(({ alterEgo, id, name }) => (
-            <HeroCard id={id} name={name} alterEgo={alterEgo} />
-          ))}
+          {data ? (
+            data.map(({ alterEgo, id, name }) => (
+              <HeroCard key={id} id={id} name={name} alterEgo={alterEgo} />
+            ))
+          ) : (
+            <div>No heroes found</div>
+          )}
         </div>
       </main>
     </Layout>

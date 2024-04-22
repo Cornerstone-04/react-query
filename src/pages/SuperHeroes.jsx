@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
-import axiosApi from "../../api/axios";
+import axiosApi from "../api/axios";
 import useSuperHeroes from "../utils/store/superHeroes";
-import toast from "react-hot-toast";
+// import toast from "react-hot-toast";
 import { HeroCard } from "../components";
 
 const SuperHeroes = () => {

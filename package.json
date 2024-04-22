@@ -11,16 +11,18 @@
     "serve-json": "json-server db.json --port 5000"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.31.0",
+    "@tanstack/react-query-devtools": "^5.31.0",
     "axios": "^1.6.8",
     "json-server": "^1.0.0-alpha.23",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",
-    "react-query": "^3.39.3",
     "react-router-dom": "^6.22.3",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@tanstack/eslint-plugin-query": "^5.28.11",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@vitejs/plugin-react": "^4.2.1",
