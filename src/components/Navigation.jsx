@@ -43,7 +43,7 @@ const Navigation = () => {
         </button>
       </div>
 
-      {toggleMenu && <Menu />}
+      <Menu showMenu={toggleMenu} />
     </nav>
   );
 };

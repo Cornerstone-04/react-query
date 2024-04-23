@@ -1,27 +1,23 @@
-import { create } from "zustand"
-import { persist } from "zustand/middleware"
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
+import { clearStore, setSuperHeroes } from "./heroActions";
 
-const setSuperHeroes = (set) => (newSuperHeroes) => {
-    set({ superHeroes: newSuperHeroes });
-};
-
-const clearStore = (set) => () => {
-    set({ superHeroes: [] });
-    localStorage.removeItem("superHeroes-storage");
-};
+const heroActions = (set) => ({
+  clearStore: clearStore(set),
+  setSuperHeroes: setSuperHeroes(set),
+});
 
 const useSuperHeroes = create(
-    persist(
-        (set) => ({
-            superHeroes: [],
-            setSuperHeroes: setSuperHeroes(set),
-            clearStore: clearStore(set)
-        }),
-        {
-            name: "superHeroes",
-            getStorage: () => localStorage
-        }
-    )
-)
+  persist(
+    (set) => ({
+      superHeroes: [],
+      ...heroActions(set),
+    }),
+    {
+      name: "superHeroes",
+      storage: localStorage,
+    }
+  )
+);
 
-export default useSuperHeroes
+export default useSuperHeroes;

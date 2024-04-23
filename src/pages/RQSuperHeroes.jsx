@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import axiosApi from "../api/axios";
 import useSuperHeroes from "../utils/store/superHeroes";
 import { HeroCard } from "../components";
+import PrimaryBtn from "../assets/Buttons";
 
 const RQSuperHeroes = () => {
   const { setSuperHeroes } = useSuperHeroes();
@@ -30,13 +31,20 @@ const RQSuperHeroes = () => {
       refetchOnWindowFocus: true, // data is fetched again when your window loses and regains focus
       refetchInterval: false, // for polling
       enabled: false, // to deactivate automatic fetching on page load (change event of query)
-      /**
+      /*
        * Caching allows users to view previously loaded data without loading delay.
        * Caching reduces the number of data requests for data that doesn't change often.
        *
        * Polling is the process of fetching data at regular intervals.
        * Automatic fetching is paused if the window loses focus.
-       */
+       
+      */
+    },
+    onSuccess: (data) => {
+      console.log("Data fetched successfully", data);
+    },
+    onError: (error) => {
+      console.log("Data fetch failed", error.message);
     },
   });
 
@@ -79,12 +87,7 @@ const RQSuperHeroes = () => {
       <main className="w-full flex flex-col gap-4 p-4">
         <header className="w-full font-bold flex justify-between items-center">
           <h2 className="text-2xl font bold text-slate-800">RQ Super Heroes</h2>
-          <button
-            onClick={refetch}
-            className="w-fit p-3 bg-green-500 text-white font-semibold"
-          >
-            Fetch Heroes
-          </button>
+          <PrimaryBtn action={refetch} label="Fetch Heroes" />
         </header>
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center md:justify-items-start gap-4">
           {data ? (
