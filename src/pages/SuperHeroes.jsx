@@ -64,7 +64,7 @@ const SuperHeroes = () => {
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center md:justify-items-start gap-4">
           {data && data.length > 0 ? (
             data.map(({ alterEgo, id, name }) => (
-              <HeroCard id={id} name={name} alterEgo={alterEgo} />
+              <HeroCard key={id} id={id} name={name} alterEgo={alterEgo} />
             ))
           ) : (
             <div>

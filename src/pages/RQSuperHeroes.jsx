@@ -1,86 +1,46 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Layout from "../components/Layout";
-import { useQuery } from "@tanstack/react-query";
-import axiosApi from "../api/axios";
-import useSuperHeroes from "../utils/store/superHeroes";
 import { HeroCard } from "../components";
 import PrimaryBtn from "../assets/Buttons";
+import toast from "react-hot-toast";
+import { getSuperHeroes } from "../hooks/useSuperHeroesData";
+import useSuperHeroes from "../utils/store/superHeroes";
 
 const RQSuperHeroes = () => {
   const { setSuperHeroes } = useSuperHeroes();
-  const fetchSuperHeroes = async () => {
-    try {
-      const response = await axiosApi.get("/superheroes");
-      if (response.status !== 200) {
-        throw new Error("Failed to fetch data");
-      }
-      return response.data;
-    } catch (error) {
-      throw new Error(error.response?.data?.message || "Failed to fetch data");
-    }
+
+  const onSuccess = (data) => {
+    console.log("Fetched Data:", data);
+    setSuperHeroes(data);
+    toast.success("Data fetched successfully");
+  };
+  const onError = (error) => {
+    console.error("Error fetching data:", error);
+    toast.error("Error fetching data: ");
   };
 
   //destructure request element
-  const { data, error, isError, isLoading, refetch } = useQuery({
-    queryKey: ["super-heroes"],
-    queryFn: fetchSuperHeroes,
-    options: {
-      // cacheTime: 5000,
-      // staleTime: 0,
-      // refetchOnMount: true, // or false or "always"
-      refetchOnWindowFocus: true, // data is fetched again when your window loses and regains focus
-      refetchInterval: false, // for polling
-      enabled: false, // to deactivate automatic fetching on page load (change event of query)
-      /*
-       * Caching allows users to view previously loaded data without loading delay.
-       * Caching reduces the number of data requests for data that doesn't change often.
-       *
-       * Polling is the process of fetching data at regular intervals.
-       * Automatic fetching is paused if the window loses focus.
-       
-      */
-    },
-    onSuccess: (data) => {
-      console.log("Data fetched successfully", data);
-    },
-    onError: (error) => {
-      console.log("Data fetch failed", error.message);
-    },
-  });
+  const { data, error, isError, isLoading, refetch } = getSuperHeroes(
+    onSuccess,
+    onError
+  );
 
-  useEffect(() => {
-    if (data) {
-      setSuperHeroes(data);
-    }
-  }, [data, setSuperHeroes]);
-
-  // loading state
-  if (isLoading) {
+  const ResponseLayout = ({ text }) => {
     return (
       <Layout>
         <main className="w-full flex flex-col gap-4 p-4">
           <header className="w-full font-bold">
-            <h2 className="text-2xl font bold text-slate-800">Loading ...</h2>
+            <h2 className="text-2xl font bold text-slate-800">{text}</h2>
           </header>
         </main>
       </Layout>
     );
-  }
+  };
+  // loading state
+  if (isLoading) return <ResponseLayout text="Loading..." />;
 
   // error state
-  if (isError) {
-    return (
-      <Layout>
-        <main className="w-full flex flex-col gap-4 p-4">
-          <header className="w-full font-bold">
-            <h2 className="text-2xl font bold text-slate-800">
-              {error.message}
-            </h2>
-          </header>
-        </main>
-      </Layout>
-    );
-  }
+  if (isError) return <ResponseLayout text={error.message} />;
 
   return (
     <Layout>
@@ -90,7 +50,7 @@ const RQSuperHeroes = () => {
           <PrimaryBtn action={refetch} label="Fetch Heroes" />
         </header>
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center md:justify-items-start gap-4">
-          {data ? (
+          {Array.isArray(data) ? (
             data.map(({ alterEgo, id, name }) => (
               <HeroCard key={id} id={id} name={name} alterEgo={alterEgo} />
             ))
