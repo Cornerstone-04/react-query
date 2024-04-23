@@ -26,10 +26,11 @@ const { data, error, isError, isLoading, refetch } = useQuery({
 });
 ```
 
-33 Data Transformation
+## Data Transformation
+
+- React query provides configuration in useQuery hook, by using the `select` option
 
 ```Javascript
-//React query provides configuration in useQuery hook
 const { data, error, isError, isLoading, refetch } = useQuery({
     queryKey: ["super-heroes"],
     queryFn: fetchSuperHeroes,
@@ -40,4 +41,82 @@ const { data, error, isError, isLoading, refetch } = useQuery({
       return superHeroNames;
     },
   });
+```
+
+## Custome hooks
+
+- Create custom hooks for larger applications
+
+```Javascript
+export const getSuperHeroes = (onSuccess, onError) => {
+  return useQuery({
+    queryKey: ["super-heroes"],
+    queryFn: fetchSuperHeroes,
+    onSuccess,
+    onError,
+  });
+};
+```
+
+## Query by id
+
+- Create a new page that will eventually display the details about one single super hero.
+- Configure the route to that page and add a link from the super heroes list page to the super hero detais page.
+- Fetch a superhero by id and display the details in the UI.
+- Custome hook
+
+```Javascript
+const fetchSuperHero = async ({ queryKey }) => {
+  const heroId = queryKey[1];
+  try {
+    const response = await axiosApi.get(`/superheroes/${heroId}`);
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error("Failed to fetch hero details");
+    }
+  } catch (error) {
+    console.error("Error fetching superhero:", error);
+    throw error;
+  }
+};
+
+export const getSuperHero = (heroId) => {
+  return useQuery({
+    queryKey: ["superhero", heroId],
+    queryFn: fetchSuperHero,
+  });
+};
+
+```
+
+- Dynamic page
+
+```Javascript
+const RQSingleHero = () => {
+  const { id } = useParams();
+  const { data, isLoading, isError, error } = getSuperHero(id);
+
+  if (isLoading) return <ResponseLayout text="Loading..." />;
+  if (isError) return <ResponseLayout text={error.message} />;
+
+  return (
+    <Layout>
+      <main className="w-full flex flex-col gap-4 p-4">
+        <header className="w-full font-bold">
+          <h2 className="text-2xl font bold text-slate-800">
+            {data.name} - {data.alterEgo}
+          </h2>
+        </header>
+      </main>
+    </Layout>
+  );
+};
+
+```
+
+- Configure Route
+
+```Javascript
+  <Route path="/rq-super-heroes/:id" element={<RQSingleHero />} />
 ```

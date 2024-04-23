@@ -1,9 +1,9 @@
 import React from "react";
 import Layout from "../components/Layout";
-import { HeroCard } from "../components";
+import { HeroCard, ResponseLayout } from "../components";
 import PrimaryBtn from "../assets/Buttons";
 import toast from "react-hot-toast";
-import { getSuperHeroes } from "../hooks/useSuperHeroesData";
+import { getSuperHeroes } from "../hooks/getSuperHeroesData";
 import useSuperHeroes from "../utils/store/superHeroes";
 
 const RQSuperHeroes = () => {
@@ -25,17 +25,6 @@ const RQSuperHeroes = () => {
     onError
   );
 
-  const ResponseLayout = ({ text }) => {
-    return (
-      <Layout>
-        <main className="w-full flex flex-col gap-4 p-4">
-          <header className="w-full font-bold">
-            <h2 className="text-2xl font bold text-slate-800">{text}</h2>
-          </header>
-        </main>
-      </Layout>
-    );
-  };
   // loading state
   if (isLoading) return <ResponseLayout text="Loading..." />;
 
@@ -52,7 +41,13 @@ const RQSuperHeroes = () => {
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center md:justify-items-start gap-4">
           {Array.isArray(data) ? (
             data.map(({ alterEgo, id, name }) => (
-              <HeroCard key={id} id={id} name={name} alterEgo={alterEgo} />
+              <HeroCard
+                key={id}
+                id={id}
+                name={name}
+                alterEgo={alterEgo}
+                link={`/rq-super-heroes/${id}`}
+              />
             ))
           ) : (
             <div>No heroes found</div>

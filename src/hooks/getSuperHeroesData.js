@@ -19,6 +19,10 @@ export const getSuperHeroes = (onSuccess, onError) => {
   return useQuery({
     queryKey: ["super-heroes"],
     queryFn: fetchSuperHeroes,
+    // config: {
+    //   onSuccess,
+    //   onError,
+    // },
     onSuccess,
     onError,
   });
