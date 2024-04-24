@@ -36,6 +36,13 @@ const Navigation = () => {
         >
           RQ Super Heroes
         </Link>
+        <span>|</span>
+        <Link
+          to="/rq-parallel"
+          className="hover:text-slate-500 transition-all ease-linear"
+        >
+          Parallel Queries
+        </Link>
       </div>
       <div className="flex md:hidden">
         <button onClick={handleToggleMenu}>

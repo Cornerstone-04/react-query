@@ -4,30 +4,23 @@ import { HeroCard, ResponseLayout } from "../components";
 import PrimaryBtn from "../assets/Buttons";
 import toast from "react-hot-toast";
 import { getSuperHeroes } from "../hooks/getSuperHeroesData";
-import useSuperHeroes from "../utils/store/superHeroes";
 
 const RQSuperHeroes = () => {
-  const { setSuperHeroes } = useSuperHeroes();
-
   const onSuccess = (data) => {
     console.log("Fetched Data:", data);
-    setSuperHeroes(data);
     toast.success("Data fetched successfully");
   };
   const onError = (error) => {
     console.error("Error fetching data:", error);
     toast.error("Error fetching data: ");
   };
-
   //destructure request element
   const { data, error, isError, isLoading, refetch } = getSuperHeroes(
     onSuccess,
     onError
   );
-
   // loading state
   if (isLoading) return <ResponseLayout text="Loading..." />;
-
   // error state
   if (isError) return <ResponseLayout text={error.message} />;
 

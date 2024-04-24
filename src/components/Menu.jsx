@@ -28,6 +28,12 @@ const Menu = ({ showMenu }) => {
         >
           RQ Super Heroes
         </Link>
+        <Link
+          to="/rq-parallel"
+          className="hover:text-slate-400 transition-all ease-linear"
+        >
+          Parallel Requests
+        </Link>
       </div>
     </div>
   );

@@ -10,5 +10,13 @@
     { "id": 8, "name": "Black Widow", "alterEgo": "Natasha Romanoff" },
     { "id": 9, "name": "Hulk", "alterEgo": "Bruce Banner" },
     { "id": 10, "name": "Thor", "alterEgo": "Thor Odinson" }
+  ],
+  "friends": [
+    { "id": 1, "name": "Chandler Bing" },
+    { "id": 2, "name": "Joey Tribbiani" },
+    { "id": 3, "name": "Ross Geller" },
+    { "id": 4, "name": "Monica Geller" },
+    { "id": 5, "name": "Rachel Green" },
+    { "id": 6, "name": "Phoebe Buffay" }
   ]
 }

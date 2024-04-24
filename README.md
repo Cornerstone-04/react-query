@@ -120,3 +120,34 @@ const RQSingleHero = () => {
 ```Javascript
   <Route path="/rq-super-heroes/:id" element={<RQSingleHero />} />
 ```
+
+## Parallel Queries
+
+- Make simultaneous requests on a page by calling useQuery twice.
+- Avoid error by destructuring with an alias
+
+```Javascript
+ const {
+    data: superHeroes,
+    isError: isSuperHeroesError,
+    error: superHeroesError,
+    isLoading: isSuperHeroesLoading,
+  } = useQuery({ queryKey: ["superheroes"], queryFn: fetchSuperHeroes });
+
+  const {
+    data: friends,
+    isError: isFriendsError,
+    error: friendsError,
+    isLoading: isFriendsLoading,
+  } = useQuery({ queryKey: ["friends"], queryFn: fetchFriends });
+
+  if (isSuperHeroesError || isFriendsError)
+    return (
+      <ResponseLayout
+        text={superHeroesError?.message || friendsError?.message}
+      />
+    );
+
+  if (isSuperHeroesLoading || isFriendsLoading)
+    return <ResponseLayout text={"Loading..."} />;
+```
