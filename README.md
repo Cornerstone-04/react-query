@@ -151,3 +151,47 @@ const RQSingleHero = () => {
   if (isSuperHeroesLoading || isFriendsLoading)
     return <ResponseLayout text={"Loading..."} />;
 ```
+
+## Dynamic Parallel Queries
+
+- React Query uses `useQueries` hook for dynamic parallel requests.
+
+```Javascript
+ const queryResults = useQueries({
+    queries: heroIds.map((id) => ({
+      queryKey: ["superhero", id],
+      queryFn: () => fetchSuperHeroes(id),
+      onError: (err) =>
+        console.error(`Error fetching hero with ID ${id}:`, err),
+    })),
+  });
+```
+
+## Dependent Queries
+
+- Dependent queries are queries that depend on the result of another query.
+
+```Javascript
+const {
+    data: user,
+    isLoading: userLoading,
+    isError: userError,
+    error: userErrorDetails,
+  } = useQuery({
+    queryKey: ["user", email],
+    queryFn: () => fetchUserByEmail(email),
+    enabled: !!email,
+  });
+
+  const channelID = user?.data.channelID;
+  const {
+    data: courses,
+    isLoading: coursesLoading,
+    isError: coursesError,
+    error: coursesErrorDetails,
+  } = useQuery({
+    queryKey: ["channel", channelID],
+    queryFn: () => fetchCoursesById(channelID),
+    enabled: !!channelID, v
+  });
+```

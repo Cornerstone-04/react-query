@@ -1,6 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import {
+  DependentQueriesPage,
+  DynamicParallelQueries,
   Home,
   NotFound,
   ParallelQueries,
@@ -8,6 +10,7 @@ import {
   RQSuperHeroes,
   SuperHeroes,
 } from "../pages";
+import PaginatedQueries from "../pages/PaginatedQueries";
 
 const AppRoutes = () => {
   return (
@@ -18,6 +21,15 @@ const AppRoutes = () => {
         <Route path="/rq-super-heroes" element={<RQSuperHeroes />} />
         <Route path="/rq-super-heroes/:id" element={<RQSingleHero />} />
         <Route path="/rq-parallel" element={<ParallelQueries />} />
+        <Route
+          path="/rq-parallel-dynamic"
+          element={<DynamicParallelQueries heroIds={[1, 3]} />}
+        />
+        <Route
+          path="/rq-dependent-queries"
+          element={<DependentQueriesPage email="johndoe@example.com" />}
+        />
+        <Route path="/rq-colors" element={<PaginatedQueries />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

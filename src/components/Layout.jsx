@@ -1,11 +1,11 @@
 import React from "react";
 import Navigation from "./Navigation";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, className }) => {
   return (
-    <div className="w-full flex flex-col">
+    <div className={`${className} w-full flex flex-col`}>
       <Navigation />
-      <div className="w-full pt-4">{children}</div>
+      <div className="w-full p-4 h-fit-screen overflow-y-auto">{children}</div>
     </div>
   );
 };

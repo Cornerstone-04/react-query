@@ -18,5 +18,37 @@
     { "id": 4, "name": "Monica Geller" },
     { "id": 5, "name": "Rachel Green" },
     { "id": 6, "name": "Phoebe Buffay" }
+  ],
+  "users": [
+    { "id": "johndoe@example.com", "channelId": "talkwithjohn" },
+    { "id": "janedoe@example.com", "channelId": "talkwithjane" },
+    { "id": "jamesdoe@example.com", "channelId": "talkwithjames" }
+  ],
+  "channels": [
+    { "id": "talkwithjohn", "content": ["lifestyle", "sports", "technology"] },
+    { "id": "talkwithjane", "content": ["fashion", "lifestyle", "religion"] },
+    { "id": "talkwithjames", "content": ["lifestyle", "sports", "technology"] }
+  ],
+  "colors": [
+    { "id": 1, "label": "red", "hex": "#FF0000" },
+    { "id": 2, "label": "green", "hex": "#00FF00" },
+    { "id": 3, "label": "blue", "hex": "#0000FF" },
+    { "id": 4, "label": "yellow", "hex": "#FFFF00" },
+    { "id": 5, "label": "purple", "hex": "#800080" },
+    { "id": 6, "label": "orange", "hex": "#FFA500" },
+    { "id": 7, "label": "black", "hex": "#000000" },
+    { "id": 8, "label": "white", "hex": "#FFFFFF" },
+    { "id": 9, "label": "gray", "hex": "#808080" },
+    { "id": 10, "label": "brown", "hex": "#A52A2A" },
+    { "id": 11, "label": "pink", "hex": "#FFC0CB" },
+    { "id": 12, "label": "cyan", "hex": "#00FFFF" },
+    { "id": 13, "label": "magenta", "hex": "#FF00FF" },
+    { "id": 14, "label": "lime", "hex": "#00FF00" },
+    { "id": 15, "label": "teal", "hex": "#008080" },
+    { "id": 16, "label": "lavender", "hex": "#E6E6FA" },
+    { "id": 17, "label": "maroon", "hex": "#800000" },
+    { "id": 18, "label": "navy", "hex": "#000080" },
+    { "id": 19, "label": "olive", "hex": "#808000" },
+    { "id": 20, "label": "silver", "hex": "#C0C0C0" }
   ]
 }

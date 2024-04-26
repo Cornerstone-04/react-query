@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axiosApi from "../api/axios";
 
 const fetchSuperHero = async ({ queryKey }) => {
@@ -12,13 +12,19 @@ const fetchSuperHero = async ({ queryKey }) => {
     }
   } catch (error) {
     console.error("Error fetching superhero:", error);
-    throw error;
+    throw error;  // Propagate the error to react-query which can then handle it accordingly.
   }
 };
 
 export const getSuperHero = (heroId) => {
+  const queryClient = useQueryClient();
+
   return useQuery({
     queryKey: ["superhero", heroId],
     queryFn: fetchSuperHero,
+    initialData: () => {
+      // Attempt to return initial data from the cache if available.
+      return queryClient.getQueryData(["superhero", heroId]);
+    }
   });
 };
