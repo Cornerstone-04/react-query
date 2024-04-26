@@ -20,7 +20,7 @@ const fetchColors = async (pageNo) => {
 const PaginatedQueries = () => {
   const [page, setPage] = useState(1);
 
-  const { isLoading, isError, data, error, is Fetching } = useQuery({
+  const { isLoading, isError, data, error } = useQuery({
     queryKey: ["colors", page],
     queryFn: () => fetchColors(page),
     keepPreviousData: true,
